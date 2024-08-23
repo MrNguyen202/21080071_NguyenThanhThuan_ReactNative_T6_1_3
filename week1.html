@@ -1,0 +1,58 @@
+<!-- 
+ Coding Challenge #1
+ Mark and John are trying to compare their BMI (Body Mass Index), which is 
+ calculated using the formula:
+ BMI = mass / height ** 2 = mass / (height * height) (mass in kg 
+ and height in meter).
+ Your tasks:
+ 1. Store Mark's and John's mass and height in variables
+ 2. Calculate both their BMIs using the formula (you can even implement both 
+ versions
+ 3. Create a Boolean variable 'markHigherBMI' containing information about
+ whether Mark has a higher BMI than John.
+ Test data:
+ § Data 1: Marks weights 78 kg and is 1.69 m tall. John weights 92 kg and is 1.95m tall.
+ § Data 2: Marks weights 95 kg and is 1.88 m tall. John weights 85 kg and is 1.76 m tall.
+  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Data 1
+        var heightMark1 = 1.69;
+        var massMark1 = 78;
+
+        var heightJohn1 = 1.95;
+        var massJohn1 = 92;
+
+        //Data 2
+        var heightMark2 = 1.88;
+        var massMark2 = 95;
+
+        var heightJohn2 = 1.76;
+        var massJohn2 = 85;
+
+        //Tạo hàm tính BMI
+        function calculateBMI(height, mass) {
+            return mass / (height ** 2);
+        }
+
+        //Tính BMI của Mark và John
+        var markBMI1 = calculateBMI(heightMark1, massMark1);
+        var johnBMI1 = calculateBMI(heightJohn1, massJohn1);
+
+        var markBMI2 = calculateBMI(heightMark2, massMark2);
+        var johnBMI2 = calculateBMI(heightJohn2, massJohn2);
+    </script>
+</body>
+
+</html>
