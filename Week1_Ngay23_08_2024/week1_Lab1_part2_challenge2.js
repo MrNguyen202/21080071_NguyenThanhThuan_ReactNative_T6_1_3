@@ -18,12 +18,9 @@
 // array)
 
 var tip;
-var bill1 = 275;
-var bill2 = 40;
-var bill3 = 430;
 
 //Su dung if else
-function calculateTip(bill) {
+function calcTip(bill) {
     if (bill >= 50 && bill <= 300) {
         return bill * 0.15
     } else {
@@ -36,18 +33,11 @@ function tipToanTu3Ngoi(bill) {
     return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.20;
 }
 
-console.log("<-----------------Ket qua test su dung if else----------------->");
-console.log(`The bill was ${bill1}, the tip was ${calculateTip(bill1)}, and the total value ${bill1 + calculateTip(bill1)}`);
-console.log(`The bill was ${bill2}, the tip was ${calculateTip(bill2)}, and the total value ${bill2 + calculateTip(bill2)}`);
-console.log(`The bill was ${bill3}, the tip was ${calculateTip(bill3)}, and the total value ${bill3 + calculateTip(bill3)}`);
+var bills = [125, 555, 44];
+var tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
 
+// 4. Bonus: Create an array 'total' containing the total values, so the bill + tip
+var total = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
 
-console.log("<-----------------Ket qua test su dung toan tu 3 ngoi----------------->");
-console.log(`The bill was ${bill1}, the tip was ${tipToanTu3Ngoi(bill1)}, and the total value ${bill1 + tipToanTu3Ngoi(bill1)}`);
-console.log(`The bill was ${bill2}, the tip was ${tipToanTu3Ngoi(bill2)}, and the total value ${bill2 + tipToanTu3Ngoi(bill2)}`);
-console.log(`The bill was ${bill3}, the tip was ${tipToanTu3Ngoi(bill3)}, and the total value ${bill3 + tipToanTu3Ngoi(bill3)}`);
-
-//Ham calcTip
-function calcTip(bill) {
-    return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.20;
-}
+console.log("Tip : " + tips);
+console.log("Bill + Tip: " + total);
