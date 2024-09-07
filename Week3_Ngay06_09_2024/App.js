@@ -85,7 +85,7 @@ export default function App() {
 
       <View
         style={{
-          flex: 1,
+          flex: 2,
           alignItems: 'center',
         }}>
         <TouchableOpacity style={{
