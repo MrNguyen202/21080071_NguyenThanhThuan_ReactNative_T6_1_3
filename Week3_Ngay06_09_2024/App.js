@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, View, Text, TouchableOpacity } from 'react-native';
+import { TextInput, View, Text, TouchableOpacity, } from 'react-native';
+
+import Fontisto from '@expo/vector-icons/Fontisto';
 
 export default function App() {
   return (
@@ -10,18 +12,14 @@ export default function App() {
       }}>
       <View
         style={{
-          flex: 3,
+          flex: 2,
           flexDirection: 'row',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-end',
         }}>
-        <View
-          style={{
-            width: 150,
-            height: 150,
-            borderWidth: 20,
-            borderRadius: 100,
-          }}></View>
+        <View>
+          <Fontisto name="locked" size={100} color="black" />
+        </View>
       </View>
 
       <View
@@ -37,7 +35,7 @@ export default function App() {
             fontWeight: 'bold',
             textTransform: 'uppercase',
           }}>
-          Grow {'\n'} your business
+          forget {'\n'} password
         </Text>
       </View>
 
@@ -52,8 +50,10 @@ export default function App() {
             fontSize: 17,
             fontWeight: 'bold',
             textAlign: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,
           }}>
-          We will help you to grow your business using online server
+          Provide your account's email for which you want to reset your password
         </Text>
       </View>
 
@@ -64,56 +64,46 @@ export default function App() {
           justifyContent: 'space-evenly',
           alignItems: 'center',
         }}>
-        <TouchableOpacity
+        <View
           style={{
-            width: 120,
+            width: 320,
             height: 50,
-            backgroundColor: '#E3C000',
-            justifyContent: 'center',
+            backgroundColor: '#C4C4C4',
+            flexDirection: 'row',
             alignItems: 'center',
-            borderRadius: 10,
           }}>
-          <Text
+          <Fontisto name="email" size={30} style={{ paddingLeft: 15, paddingRight: 15 }} color="black" />
+          <TextInput
             style={{
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              fontSize: 20,
-            }}>
-            Login
-          </Text>
-        </TouchableOpacity>
+              fontSize: 18,
+            }}
+            placeholder="Email"
+          />
+        </View>
 
-        <TouchableOpacity
-          style={{
-            width: 120,
-            height: 50,
-            backgroundColor: '#E3C000',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 10,
-          }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              fontSize: 20,
-            }}>
-            Sign up
-          </Text>
-        </TouchableOpacity>
       </View>
-      <View style={{
+
+      <View
+        style={{
           flex: 1,
-          alignItems: 'center'
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity style={{
+          width: 320,
+          height: 50,
+          backgroundColor: '#E3C000',
+          justifyContent: 'center',
         }}>
           <Text style={{
             fontSize: 20,
+            textAlign: 'center',
             fontWeight: 'bold',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
           }}>
-            How we work?
+            Next
           </Text>
-        </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
