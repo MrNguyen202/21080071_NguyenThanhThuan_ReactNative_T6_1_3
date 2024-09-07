@@ -62,6 +62,7 @@ export default function App() {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
+          alignItems: 'center',
         }}>
         <TouchableOpacity
           style={{
@@ -101,6 +102,18 @@ export default function App() {
           </Text>
         </TouchableOpacity>
       </View>
+      <View style={{
+          flex: 1,
+          alignItems: 'center'
+        }}>
+          <Text style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            textTransform: 'uppercase'
+          }}>
+            How we work?
+          </Text>
+        </View>
     </View>
   );
 }
