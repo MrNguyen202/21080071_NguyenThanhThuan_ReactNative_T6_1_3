@@ -74,6 +74,7 @@ const Screen4 = ({navigation}) => {
                     <OtpInput
                         numberOfDigits={6}
                         focusColor={'#000'}
+                        
                     />
                 </View>
             </View>

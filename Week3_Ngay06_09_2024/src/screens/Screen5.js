@@ -1,7 +1,11 @@
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
+import Fontisto from '@expo/vector-icons/Fontisto';
 
-const Screen5 = () => {
+const Screen5 = ({ navigation }) => {
+    const click = () => {
+        navigation.navigate('Screen6', { name: 'Screen6' });
+    }
     return (
         <View
             style={styles.container}
@@ -12,7 +16,7 @@ const Screen5 = () => {
 
             <View style={{
                 flex: 1,
-                justifyContent: 'space-around',
+                justifyContent: 'space-evenly',
                 alignItems: 'center',
             }}>
                 <TextInput
@@ -22,20 +26,40 @@ const Screen5 = () => {
 
                 </TextInput>
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Password'
-                >
-                </TextInput>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                }}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        secureTextEntry={true}
+                        width={250}
+                    ></TextInput>
+                    <TouchableOpacity style={{
+                        height: 50,
+                        width: 70,
+                        backgroundColor: '#CAE1D1',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <Fontisto name="eye" size={25} color="black" />
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={styles.jCen_aCen}>
+            <View style={{
+                flex: 1,
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                marginTop: 40,
+            }}>
                 <TouchableOpacity style={styles.nutLogin}>
                     <Text style={styles.textNutLogin}>
                         login
                     </Text>
                 </TouchableOpacity>
-            </View>
-            <View style={styles.jEvenly_aCen}>
                 <Text style={styles.text}>When you agree to tems and coditions</Text>
                 <Text style={{
                     color: 'blue', fontSize: 15
@@ -94,18 +118,32 @@ const Screen5 = () => {
                         },
                         styles.jCen_aCen
                     ]}>
-                        <Text style={{
-                            color: 'white',
-                            fontSize: 30,
-                            height: 48,
-                            textAlign: 'center',
-                        }}>
-                            G
-                        </Text>
+                        <Image style={{
+                            width: 35,
+                            height: 35,
+                        }} source={{ uri: 'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png' }} />
                     </TouchableOpacity>
                 </View>
             </View>
+            <View style={{
+                position: 'absolute',
 
+            }}>
+                <TouchableOpacity
+                    style={{
+                        margin: 15,
+                        left: 270
+                    }}
+                    onPress={click}
+                >
+                    <Text style={{
+                        color: 'black',
+                        fontSize: 15,
+                    }}>
+                        Next Screen6
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
