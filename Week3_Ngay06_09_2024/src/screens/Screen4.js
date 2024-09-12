@@ -1,17 +1,23 @@
 import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { OtpInput } from 'react-native-otp-entry';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const Screen4 = ({navigation}) => {
+const Screen4 = ({ navigation }) => {
     const click = () => {
         navigation.navigate('Screen5', { name: 'Screen5' });
     }
     return (
-        <View
+        <LinearGradient
             style={{
                 flex: 1,
                 backgroundColor: '#00ccf9',
-            }}>
+            }}
+            colors={['#C7F3F6', '#E6E6E6', '#00ccf9']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            locations={[0.5, 0.85, 0.95]}
+        >
             <View
                 style={{
                     flex: 2,
@@ -74,7 +80,7 @@ const Screen4 = ({navigation}) => {
                     <OtpInput
                         numberOfDigits={6}
                         focusColor={'#000'}
-                        
+
                     />
                 </View>
             </View>
@@ -124,14 +130,14 @@ const Screen4 = ({navigation}) => {
                     onPress={click}
                 >
                     <Text style={{
-                        color: 'white',
+                        color: 'black',
                         fontSize: 15,
                     }}>
                         Next Screen5
                     </Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </LinearGradient>
     );
 }
 

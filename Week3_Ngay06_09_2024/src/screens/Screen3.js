@@ -1,17 +1,23 @@
 import { Text, TouchableOpacity, View, TextInput } from 'react-native'
 import React from 'react'
 import Fontisto from '@expo/vector-icons/Fontisto';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const Screen3 = ({navigation}) => {
+const Screen3 = ({ navigation }) => {
     const click = () => {
         navigation.navigate('Screen4', { name: 'Screen4' });
     }
     return (
-        <View
+        <LinearGradient
             style={{
                 flex: 1,
                 backgroundColor: '#00ccf9',
-            }}>
+            }}
+            colors={['#C7F3F6', '#E6E6E6', '#00ccf9']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            locations={[0.5, 0.85, 0.95]}
+        >
             <View
                 style={{
                     flex: 2,
@@ -111,7 +117,7 @@ const Screen3 = ({navigation}) => {
             </View>
             <View style={{
                 position: 'absolute',
-                
+
             }}>
                 <TouchableOpacity
                     style={{
@@ -121,14 +127,14 @@ const Screen3 = ({navigation}) => {
                     onPress={click}
                 >
                     <Text style={{
-                        color: 'white',
+                        color: 'black',
                         fontSize: 15,
                     }}>
                         Next Screen4
                     </Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </LinearGradient>
     );
 }
 

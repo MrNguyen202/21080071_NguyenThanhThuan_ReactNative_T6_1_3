@@ -51,13 +51,13 @@ const Screen8 = () => {
         </View>
         <View style={styles.boxLogoMethods}>
           <TouchableOpacity style={styles.boxLogo1}>
-            <Fontisto name="person" size={30} color="#fff"/>
+            <Fontisto name="person" size={30} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.boxLogo2}>
-            <Fontisto name="wifi" size={30} color="#fff"/>
+            <Fontisto name="wifi" size={30} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.boxLogo3}>
-            <Fontisto name="facebook" size={30} color="#fff"/>
+            <Fontisto name="facebook" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
       </View>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-  }, 
+  },
   boxMethod: {
     width: 350,
     flexDirection: 'row',
@@ -138,13 +138,13 @@ const styles = StyleSheet.create({
   textMethod: {
     fontSize: 18,
   },
-  boxLogoMethods:{
+  boxLogoMethods: {
     width: 350,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  boxLogo1:{
+  boxLogo1: {
     width: 90,
     height: 90,
     borderRadius: 15,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  boxLogo2:{
+  boxLogo2: {
     width: 90,
     height: 90,
     borderRadius: 15,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  boxLogo3:{
+  boxLogo3: {
     width: 90,
     height: 90,
     borderRadius: 15,
