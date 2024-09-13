@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Fontsion from 'react-native-vector-icons/FontAwesome5';
 import { useState } from 'react'
+import React from 'react'
 
 export default function App() {
   // tao state de luu trang thai cua checkbox
@@ -18,22 +19,18 @@ export default function App() {
         if (checkLowerCase === false) {
           setCheckLowerCase(true);
           setDkPassword([...dkPassword, 'abcdefghijklmnopqrstuvwxyz']);
-          console.log(dkPassword);
         }else{
           setCheckLowerCase(false);
           setDkPassword(dkPassword.filter((item) => item !== 'abcdefghijklmnopqrstuvwxyz'));
-          console.log(dkPassword);
         }
         break;
       case 'upperCase':
         if (checkUpperCase === false) {
           setCheckUpperCase(true);
           setDkPassword([...dkPassword, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']);
-          console.log(dkPassword);
         }else{
           setCheckUpperCase(false);
           setDkPassword(dkPassword.filter((item) => item !== 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
-          console.log(dkPassword);
         }
         break;
       case 'number':
