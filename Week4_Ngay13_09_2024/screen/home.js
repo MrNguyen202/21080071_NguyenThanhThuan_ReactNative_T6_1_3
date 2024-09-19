@@ -19,7 +19,7 @@ const home = ({natigation}) => {
                 <Text style={styles.text}>Screen 2c</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.box}>
+            <TouchableOpacity style={styles.box} onPress={() => natigation('tiki')}>
                 <Text style={styles.text}>Screen Tiki_Ok</Text>
             </TouchableOpacity>
         </View>
@@ -47,5 +47,5 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         color: 'white',
-    }
+    },
 })
