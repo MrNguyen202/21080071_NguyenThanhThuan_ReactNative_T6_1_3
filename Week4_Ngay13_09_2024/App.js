@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   Header: {
     flex: 1,
-    width: 340,
+    width: 300,
     height: 200,
     borderRadius: 20,
     justifyContent: 'flex-end',
@@ -192,11 +192,10 @@ const styles = StyleSheet.create({
   textShow: {
     width: 320,
     height: 50,
-    borderRadius: 10,
     backgroundColor: '#151537',
     color: 'white',
     fontSize: 18,
-    padding: 11,
+    padding: 12,
     textAlign: 'center'
   },
   inputLength: {
