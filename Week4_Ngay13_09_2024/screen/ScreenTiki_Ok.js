@@ -132,7 +132,7 @@ const ScreenTiki_Ok = ({ natigation }) => {
             </View>
             <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
                 <TouchableOpacity style={{ width: 100, margin: 20, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }} onPress={clickHome}>
-                    <Fontsion name="arrow-circle-left" size={30} color="black" />
+                    <Fontsion name="star" size={30} color="black" />
                     <Text style={{ fontSize: 25, color: 'black' }}>Back</Text>
                 </TouchableOpacity>
             </View>

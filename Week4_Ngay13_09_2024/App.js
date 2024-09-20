@@ -5,7 +5,7 @@ import Screen2c from './screen/Screen2c';
 import ScreenTiki_Ok from './screen/ScreenTiki_Ok';
 
 const App = () => {
-  const [manHinh, setManHinh] = useState('tiki');
+  const [manHinh, setManHinh] = useState('home');
 
   const navigateTo = (screen) => {
     setManHinh(screen);
