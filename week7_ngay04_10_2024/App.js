@@ -1,121 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import { useState } from 'react';
-import { useEffect } from 'react';
+import Login from './screens/login';
+import DemoCRUD from './screens/demoCRUD';
+import Dashboard from './screens/dashboard';
+import AddNote from './screens/addNote';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch('https://66ff35a72b9aac9c997e861d.mockapi.io/thuanAPIDemo202')
-      .then(response => response.json())
-      .then(json => setData(json))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-  //add
-  const add = () => {
-    fetch('https://66ff35a72b9aac9c997e861d.mockapi.io/thuanAPIDemo202', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        img: "thuanimg",
-        name: "Thuan",
-        shop: "ThuanShop",
-      }),
-    })
-    .then(response => response.json())
-    .then(newItem => {
-      // Sau khi thêm dữ liệu thành công, cập nhật state để hiển thị dữ liệu mới
-      setData([...data, newItem]); // Thêm item mới vào danh sách data
-    })
-    .catch(error => console.error('Error adding data:', error));
-  }
-
-  //
-  const deletes = () => {
-    fetch('https://66ff35a72b9aac9c997e861d.mockapi.io/thuanAPIDemo202', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        img: "thuanimg",
-        name: "Thuan",
-        shop: "ThuanShop",
-      }),
-    })
-    .then(response => response.json())
-    .then(newItem => {
-      // Sau khi thêm dữ liệu thành công, cập nhật state để hiển thị dữ liệu mới
-      setData([...data, newItem]); // Thêm item mới vào danh sách data
-    })
-    .catch(error => console.error('Error adding data:', error));
-  }
-
   return (
-    <View style={styles.container}>
-      <View style={styles.chucNang}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => add()}
-        >
-          <Text style={styles.text}>Add</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => deletes()} style={styles.button}>
-          <Text style={styles.text}>Delete</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.show}>
-        <ScrollView>
-          {data ? (
-            <Text >{JSON.stringify(data, null, 2)}</Text>
-          ) : (
-            <Text>Loading...</Text>
-          )}
-        </ScrollView>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/> */}
+        {/* <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}}/> */}
+        <Stack.Screen name="AddNote" component={AddNote} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  button: {
-    width: 200,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: 'green',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-  },
-  show: {
-    width: 300,
-    height: 300,
-    backgroundColor: 'lightgrey',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chucNang: {
-    height: 200,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  }
-});
