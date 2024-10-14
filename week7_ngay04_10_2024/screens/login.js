@@ -3,15 +3,41 @@ import { Image, StyleSheet, TextInput, View, Text, TouchableOpacity } from 'reac
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import { useState } from 'react'
-
+import { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { addUser, getAllUser } from '../api/userAPI'
 
 const Login = ({ navigation }) => {
 
   const [name, setName] = useState('');
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await getAllUser();
+        setUser(data);
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      }
+    };
+    fetchProduct();
+  }, []);
+
+  const x = user.map((item) => {
+    return item.name;
+  })
+
 
   const click = () => {
-    navigation.navigate('Dashboard', {name})
+    if (name === '') {
+      alert('Please enter your name');
+    } else if (x.includes(name)) {
+      navigation.navigate('Dashboard', { name: name });
+    } else {
+      addUser(name);
+      navigation.navigate('Dashboard', { name: name });
+    }
   }
   return (
     <View style={styles.container}>

@@ -1,21 +1,77 @@
-import { Image, StyleSheet, Text, TextInput, View, PlatList, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity } from "react-native";
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+import { useEffect, useState, useCallback } from 'react';
+import { findUserByName, updateUserById } from "../api/userAPI";
+import JobItem from "../components/JobComponent";
+import { useFocusEffect } from '@react-navigation/native';
 
 const Dashboard = ({ navigation, route }) => {
+
+    const clickBack = () => {
+        navigation.goBack();
+    }
+
+    const [name, setName] = useState(route.params.name);
+    const [user, setUser] = useState([]);
+
+
+    const fetchUser = async () => {
+        try {
+            const data = await findUserByName(name);
+            setUser(data);
+        } catch (error) {
+            console.error("Failed to fetch user:", error);
+        }
+    };
+
+    //dùng useFocusEffect và useCallback để khi quay lại màn hình này thì nó sẽ fetch lại dữ liệu
+    useFocusEffect(
+        useCallback(() => {
+            fetchUser();
+        }, [])
+    );
+
+    const job = user.flatMap((item) => {
+        return item.job;
+    });
+
+    const deleteJob = async (index) => {
+        const newJob = job.filter((item, i) => i !== index);
+        user[0].job = newJob;
+    
+        try {
+            // Cập nhật lại công việc sau khi xóa
+            await updateUserById(user[0].id, user[0]);
+    
+            // Gọi lại hàm fetchUser để reload dữ liệu từ server
+            await fetchUser();
+        } catch (error) {
+            console.error("Failed to fetch user:", error);
+        }
+    };
+
+    const clickAdd = () => {
+        navigation.navigate('AddNote', { data: user });
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <AntDesign name="arrowleft" size={24} color="black" />
+                <TouchableOpacity onPress={clickBack}>
+                    <AntDesign name="arrowleft" size={24} color="black" />
+                </TouchableOpacity>
                 <View style={styles.info}>
                     <Image
                         source={{ uri: 'https://picsum.photos/200' }}
                         style={styles.avt}
                     />
                     <View style={styles.textName}>
-                        <Text style={styles.name}>Hi thuan</Text>
+                        <Text style={styles.name}>Hi {name}</Text>
                         <Text style={styles.textAgrate}>Have agrate day a head</Text>
                     </View>
                 </View>
@@ -29,11 +85,17 @@ const Dashboard = ({ navigation, route }) => {
             </View>
 
             <View style={styles.boxListNote}>
-
+                <FlatList
+                    style={{ flex: 3, width: '100%' }}
+                    contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}
+                    data={job}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => <JobItem item={item} index={index} onDelete={deleteJob} />}
+                />
             </View>
 
             <View style={styles.boxAdd}>
-                <TouchableOpacity style={styles.buttonAdd}>
+                <TouchableOpacity style={styles.buttonAdd} onPress={() => clickAdd()}>
                     <FontAwesome6 name="add" size={30} color="#fff" />
                 </TouchableOpacity>
             </View>
@@ -121,7 +183,6 @@ const styles = StyleSheet.create({
         flex: 5,
         width: '90%',
         height: '50%',
-        backgroundColor: 'lightgrey',
         borderRadius: 10,
     }
 });

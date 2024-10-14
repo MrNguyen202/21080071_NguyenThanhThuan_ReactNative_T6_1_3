@@ -1,10 +1,41 @@
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-const AddNote = () => {
+import { useState } from "react";
+import { updateUserById } from "../api/userAPI";
+import { useFocusEffect } from "@react-navigation/native";
+
+const AddNote = ({ navigation, route }) => {
+
+    const [name, setName] = useState(route.params.data[0].name);
+    const [newJob, setNewJob] = useState('');
+
+    //lấy dữ liệu từ ô input
+    const onChangeJob = (text) => {
+        setNewJob(text);
+    }
+
+    //add thêm job vào job của user
+    const addJob = () => {
+        route.params.data[0].job.push(newJob);
+        const fetchUser = async () => {
+            try {
+                const data = await updateUserById(route.params.data[0].id, route.params.data[0]);
+            } catch (error) {
+                console.error("Failed to fetch user:", error);
+            }
+        };
+        fetchUser();
+        navigation.navigate('Dashboard', { name: name });
+    }
+
+    const clickBack = () => {
+        navigation.goBack();
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -14,12 +45,15 @@ const AddNote = () => {
                         style={styles.avt}
                     />
                     <View style={styles.textName}>
-                        <Text style={styles.name}>Hi thuan</Text>
+                        <Text style={styles.name}>Hi {name}</Text>
                         <Text style={styles.textAgrate}>Have agrate day a head</Text>
                     </View>
                 </View>
 
-                <AntDesign name="arrowleft" size={24} color="black" />
+                <TouchableOpacity onPress={clickBack}>
+                    <AntDesign name="arrowleft" size={24} color="black" />
+                </TouchableOpacity>
+
             </View>
 
             <View style={styles.boxTitle}>
@@ -29,13 +63,18 @@ const AddNote = () => {
             <View style={styles.boxInputJob}>
                 <View style={styles.inputJob}>
                     <MaterialCommunityIcons name="note-text-outline" size={24} color="#1DD75B" />
-                    <TextInput style={styles.textInput} placeholder="input your job"></TextInput>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="input your job"
+                        onChangeText={(text) => onChangeJob(text)}
+                    ></TextInput>
                 </View>
             </View>
 
             <View style={styles.boxNutFinish}>
                 <TouchableOpacity
                     style={styles.nutFinish}
+                    onPress={addJob}
                 >
                     <Text style={styles.textNutFinish}>Finish</Text>
                     <AntDesign name="arrowright" marginLeft={5} size={20} color="white" />
@@ -91,7 +130,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    textTitle:{
+    textTitle: {
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 20,
@@ -142,7 +181,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textTransform: 'uppercase',
     },
-    boxImage:{
+    boxImage: {
         flex: 4,
         justifyContent: 'flex-start',
         alignItems: 'center',
