@@ -3,66 +3,48 @@ import { Image, StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity } 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { useEffect, useState, useCallback } from 'react';
 import { findUserByName, updateUserById } from "../api/userAPI";
 import JobItem from "../components/JobComponent";
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserRequest, deleteUserJobRequest } from '../redux/actions/dashboardActions';
+import { navigate } from "../navigation/navigationRef";
+
 const Dashboard = ({ navigation, route }) => {
 
-    const clickBack = () => {
-        navigation.goBack();
-    }
-
-    const [name, setName] = useState(route.params.name);
-    const [user, setUser] = useState([]);
-
-
-    const fetchUser = async () => {
-        try {
-            const data = await findUserByName(name);
-            setUser(data);
-        } catch (error) {
-            console.error("Failed to fetch user:", error);
-        }
-    };
-
-    //dùng useFocusEffect và useCallback để khi quay lại màn hình này thì nó sẽ fetch lại dữ liệu
-    useFocusEffect(
-        useCallback(() => {
-            fetchUser();
-        }, [])
-    );
-
-    const job = user.flatMap((item) => {
-        return item.job;
-    });
-
-    const deleteJob = async (index) => {
-        const newJob = job.filter((item, i) => i !== index);
-        user[0].job = newJob;
+    const dispatch = useDispatch();
     
-        try {
-            // Cập nhật lại công việc sau khi xóa
-            await updateUserById(user[0].id, user[0]);
-    
-            // Gọi lại hàm fetchUser để reload dữ liệu từ server
-            await fetchUser();
-        } catch (error) {
-            console.error("Failed to fetch user:", error);
+    // Đảm bảo `state.dashboard` tồn tại trước khi truy cập `user`
+    const dashboard = useSelector((state) => state.dashboard);
+    const { user, isLoading } = dashboard || {};
+
+    const name = route.params.name;
+
+    const fetchUser = useCallback(() => {
+        dispatch(fetchUserRequest(name));
+    }, [dispatch, name]);
+
+    useFocusEffect(fetchUser);
+
+    // console.log(user)
+
+    const deleteJob = (index) => {
+        if (user && user[0]) {
+            dispatch(deleteUserJobRequest(user[0].id, index));
         }
     };
 
     const clickAdd = () => {
         navigation.navigate('AddNote', { data: user });
-    }
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={clickBack}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <AntDesign name="arrowleft" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.info}>
@@ -88,7 +70,7 @@ const Dashboard = ({ navigation, route }) => {
                 <FlatList
                     style={{ flex: 3, width: '100%' }}
                     contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}
-                    data={job}
+                    data={user ? user[0].job : []}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => <JobItem item={item} index={index} onDelete={deleteJob} />}
                 />
