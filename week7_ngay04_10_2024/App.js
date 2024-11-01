@@ -1,22 +1,16 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import Login from './screens/login';
-import DemoCRUD from './screens/demoCRUD';
-import Dashboard from './screens/dashboard';
-import AddNote from './screens/addNote';
-
-const Stack = createNativeStackNavigator();
+import React from 'react';
+import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { navigationRef } from './navigation/navigationRef';
+import AppNavigator from './navigation/AppNavigator';
+import store from './redux/store'; // Import store dưới dạng một đối tượng
 
 export default function App() {
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
-        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}}/>
-        <Stack.Screen name="AddNote" component={AddNote} options={{headerShown: false}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <Provider store={store}>
+            <NavigationContainer ref={navigationRef}>
+                <AppNavigator />
+            </NavigationContainer>
+        </Provider>
+    );
 }

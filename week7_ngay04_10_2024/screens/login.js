@@ -1,68 +1,40 @@
-import { Image, StyleSheet, TextInput, View, Text, TouchableOpacity } from 'react-native'
-
-import Ionicons from '@expo/vector-icons/Ionicons';
-import AntDesign from '@expo/vector-icons/AntDesign';
-
-import { useCallback, useEffect, useState } from 'react'
-import { useFocusEffect } from '@react-navigation/native'
-import { addUser, getAllUser } from '../api/userAPI'
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequest } from '../redux/actions/authActions';
 
 const Login = ({ navigation }) => {
-
   const [name, setName] = useState('');
-  const [user, setUser] = useState([]);
+    const dispatch = useDispatch();
+    const error = useSelector((state) => state.auth.error);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data = await getAllUser();
-        setUser(data);
-      } catch (error) {
-        console.error("Failed to fetch product:", error);
-      }
+    const handleLogin = () => {
+        if (name === '') {
+            Alert.alert('Please enter your name');
+        } else {
+            dispatch(loginRequest(name));
+        }
     };
-    fetchProduct();
-  }, []);
-
-  const x = user.map((item) => {
-    return item.name;
-  })
-
-
-  const click = () => {
-    if (name === '') {
-      alert('Please enter your name');
-    } else if (x.includes(name)) {
-      navigation.navigate('Dashboard', { name: name });
-    } else {
-      addUser(name);
-      navigation.navigate('Dashboard', { name: name });
-    }
-  }
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={{ uri: 'https://s3-alpha-sig.figma.com/img/4d17/f963/f6ee0953600008083c32857b2d79ab5e?Expires=1728864000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=YiPvQeynV6joYyVajxEkRP~XIRFb8DmujZUYD6U3Yi5lWQq3KxIfiDmToqmlRli3C4CwfMdl9LauuGnKk7u~4JnK1RKP12GP7CLXko3QQTPO7~vM4YTwcmjmQFQt2RHGq0EmB8fs-jZ9noOg200dAA3rQTQ70XoIm91v1zOH~q7ybIr14ZA7as~yPXsUkpLV4TMN~reSmCpbnPu~Vl93qnV-VWpF8BJh0ohOSUaDVl5zpdZLRyEqtw9i0rfvokru~uHO-0LabmaTRIzd3dhkhAeyQsfWZ5nbPIyU9nLZxvuUi8bO6OSWjma-aatpk0DjDRcaqa2LxsrlrTPR4YVmww__' }} />
-      <Text style={styles.title}> manage your {'\n'} task</Text>
+      <Image style={styles.img} source={{ uri: 'https://s3-alpha-sig.figma.com/img/4d17/f963/f6ee0953600008083c32857b2d79ab5e?Expires=1731283200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=d8qWywpZima0aHJnKXIU0OEcMND6Mpc84ygHesDXf~dV0WMfKCl-pIlh5I43~ymYA5IsMFfJZU3Y0CCNRH~01MQLMhU8RsO~moXMk6rhxsHHdlyYX2xjk2fkWHg5eJgrRzLrmOUYNf8pl17boqwxjB2nOMFPGEmCOQWSgF4n0t7ZC8mmtShI7d8uWmCBMJRLJmCOLgzIlWDXYjw~GR5rgSN67YJdpAoFz9EGQpadXbXFTnIaT-3vhuZ8wSocFaWjar06G7Yi90fHeLFOzIv1HRm68qYxhULCpJBXe-UbJ2cOvI44IkXalpnxjptkgD56MQn09FhWPjjiYeZ7inFg6g__' }} />
+      <Text style={styles.title}>Manage Your Task</Text>
       <View style={styles.boxTextInput}>
-        <Ionicons name="mail-outline" size={30} color="black" />
         <TextInput
           style={styles.input}
-          placeholder='Enter your name'
+          placeholder="Enter your name"
           onChangeText={(text) => setName(text)}
           value={name}
-        ></TextInput>
+        />
       </View>
-      <TouchableOpacity
-        style={styles.nutStart}
-        onPress={() => click()} >
-        <Text style={styles.textNutStart}>Get started</Text>
-        <AntDesign name="arrowright" marginLeft={5} size={20} color="white" />
+      <TouchableOpacity style={styles.nutStart} onPress={handleLogin}>
+        <Text style={styles.textNutStart}>Get Started</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
