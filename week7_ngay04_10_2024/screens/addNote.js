@@ -8,33 +8,33 @@ import { useState } from "react";
 import { updateUserById } from "../api/userAPI";
 import { useFocusEffect } from "@react-navigation/native";
 
+import { useDispatch } from 'react-redux';
+import { addJobRequest } from '../redux/actions/dashboardActions';
+
 const AddNote = ({ navigation, route }) => {
 
+    const dispatch = useDispatch();
     const [name, setName] = useState(route.params.data[0].name);
     const [newJob, setNewJob] = useState('');
 
-    //lấy dữ liệu từ ô input
+    // Lấy dữ liệu từ ô input
     const onChangeJob = (text) => {
         setNewJob(text);
-    }
+    };
 
-    //add thêm job vào job của user
+    // Thêm công việc vào công việc của user
     const addJob = () => {
-        route.params.data[0].job.push(newJob);
-        const fetchUser = async () => {
-            try {
-                const data = await updateUserById(route.params.data[0].id, route.params.data[0]);
-            } catch (error) {
-                console.error("Failed to fetch user:", error);
-            }
-        };
-        fetchUser();
-        navigation.navigate('Dashboard', { name: name });
-    }
+        if (newJob.trim() === '') {
+            alert('Please enter a job'); // Kiểm tra nếu ô input rỗng
+            return;
+        }
+        dispatch(addJobRequest(route.params.data[0].id, newJob));
+        navigation.navigate('Dashboard', { name });
+    };
 
     const clickBack = () => {
         navigation.goBack();
-    }
+    };
 
     return (
         <View style={styles.container}>

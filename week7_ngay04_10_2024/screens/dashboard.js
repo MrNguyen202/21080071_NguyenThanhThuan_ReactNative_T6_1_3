@@ -10,27 +10,25 @@ import JobItem from "../components/JobComponent";
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserRequest, deleteUserJobRequest } from '../redux/actions/dashboardActions';
+import { fetchUserRequest, deleteUserJobRequest, navigateToAddNote } from '../redux/actions/dashboardActions';
 import { navigate } from "../navigation/navigationRef";
 
 const Dashboard = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
-    
+
     // Đảm bảo `state.dashboard` tồn tại trước khi truy cập `user`
     const dashboard = useSelector((state) => state.dashboard);
     const { user, isLoading } = dashboard || {};
 
     const name = route.params.name;
 
-    const fetchUser = useCallback(() => {
+    //Get data to api
+    useFocusEffect(useCallback(() => {
         dispatch(fetchUserRequest(name));
-    }, [dispatch, name]);
+    }, [dispatch, user]));
 
-    useFocusEffect(fetchUser);
-
-    // console.log(user)
-
+    //Delete job
     const deleteJob = (index) => {
         if (user && user[0]) {
             console.log(user[0].id)
@@ -39,8 +37,9 @@ const Dashboard = ({ navigation, route }) => {
         }
     };
 
+
     const clickAdd = () => {
-        navigation.navigate('AddNote', { data: user });
+        dispatch(navigateToAddNote(user));
     };
 
     return (

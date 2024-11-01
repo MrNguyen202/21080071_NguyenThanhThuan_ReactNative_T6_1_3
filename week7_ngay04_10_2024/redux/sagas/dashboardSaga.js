@@ -3,10 +3,11 @@ import { findUserByName, updateUserById, findUserById } from '../../api/userAPI'
 import {
     FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE,
     UPDATE_USER_JOB_REQUEST, UPDATE_USER_JOB_SUCCESS, UPDATE_USER_JOB_FAILURE,
-    DELETE_USER_JOB_REQUEST, DELETE_USER_JOB_SUCCESS, DELETE_USER_JOB_FAILURE,
+    DELETE_USER_JOB_REQUEST, DELETE_USER_JOB_SUCCESS, DELETE_USER_JOB_FAILURE, ADD_NOTE
 } from '../actions/dashboardActions';
 
 import { ADD_JOB_REQUEST, addJobSuccess, addJobFailure } from '../actions/dashboardActions';
+import { navigate } from '../../navigation/navigationRef';
 
 
 function* fetchUserSaga(action) {
@@ -44,23 +45,35 @@ function* deleteUserJobSaga(action) {
 }
 
 function* handleAddJob(action) {
+    const { userId, newJob } = action.payload;
+
     try {
-        const { userId, newJob } = action.payload;
+        // Lấy thông tin người dùng hiện tại (bạn cần có một hàm để lấy thông tin người dùng)
+        const user = yield call(findUserById, userId);
 
-        // Lấy thông tin user hiện tại, sau đó thêm job mới
-        const updatedUser = yield call(updateUserById, userId, {
-            job: [...updatedUser.job, newJob],
-        });
+        // Thêm công việc mới vào danh sách công việc
+        user.job.push(newJob);
 
+        // Cập nhật người dùng
+        const updatedUser = yield call(updateUserById, userId, user);
         yield put(addJobSuccess(updatedUser));
     } catch (error) {
         yield put(addJobFailure(error.message));
     }
 }
 
+function* navigateToAddNoteSaga(action) {
+    const { payload } = action;
+    // Sử dụng `call` để gọi navigate
+    yield call(navigate, 'AddNote', { data: payload });
+}
+
+
+
 export function* watchDashboardSaga() {
     yield takeLatest(FETCH_USER_REQUEST, fetchUserSaga);
     yield takeLatest(UPDATE_USER_JOB_REQUEST, updateUserJobSaga);
     yield takeLatest(DELETE_USER_JOB_REQUEST, deleteUserJobSaga);
     yield takeLatest(ADD_JOB_REQUEST, handleAddJob);
+    yield takeLatest(ADD_NOTE, navigateToAddNoteSaga);
 }

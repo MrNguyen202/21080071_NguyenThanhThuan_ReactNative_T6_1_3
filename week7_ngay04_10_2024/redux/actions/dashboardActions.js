@@ -14,6 +14,10 @@ export const ADD_JOB_REQUEST = 'ADD_JOB_REQUEST';
 export const ADD_JOB_SUCCESS = 'ADD_JOB_SUCCESS';
 export const ADD_JOB_FAILURE = 'ADD_JOB_FAILURE';
 
+export const ADD_NOTE = 'ADD_NOTE';
+
+
+
 // Action Creators
 export const fetchUserRequest = (name) => ({
     type: FETCH_USER_REQUEST,
@@ -43,4 +47,10 @@ export const addJobSuccess = (updatedUser) => ({
 export const addJobFailure = (error) => ({
     type: ADD_JOB_FAILURE,
     error,
+});
+
+//
+export const navigateToAddNote = (data) => ({
+    type: ADD_NOTE,
+    payload: data,
 });

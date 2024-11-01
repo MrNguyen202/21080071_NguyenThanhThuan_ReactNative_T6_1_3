@@ -22,9 +22,18 @@ const dashboardReducer = (state = initialState, action) => {
         case 'ADD_JOB_REQUEST':
             return { ...state, isLoading: true, error: null };
         case 'ADD_JOB_SUCCESS':
-            return { ...state, isLoading: false, user: action.payload };
+            return {
+                ...state,
+                users: state.users.map(user =>
+                    user.id === action.payload.id ? action.payload : user
+                ),
+                error: null,
+            };
         case 'ADD_JOB_FAILURE':
-            return { ...state, isLoading: false, error: action.error };
+            return {
+                ...state,
+                error: action.error,
+            };
         default:
             return state;
     }
