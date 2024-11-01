@@ -33,6 +33,8 @@ const Dashboard = ({ navigation, route }) => {
 
     const deleteJob = (index) => {
         if (user && user[0]) {
+            console.log(user[0].id)
+            console.log(index)
             dispatch(deleteUserJobRequest(user[0].id, index));
         }
     };

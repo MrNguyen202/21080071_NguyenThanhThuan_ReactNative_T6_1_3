@@ -13,7 +13,6 @@ const Login = ({ navigation }) => {
             Alert.alert('Please enter your name');
         } else {
             dispatch(loginRequest(name));
-            console.log(1)
         }
     };
   return (

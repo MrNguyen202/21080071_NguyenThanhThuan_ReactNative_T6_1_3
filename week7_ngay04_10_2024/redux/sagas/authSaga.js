@@ -10,11 +10,9 @@ function* loginSaga(action) {
         // Lấy danh sách người dùng
         const users = yield call(getAllUser);
         const user = users.find((u) => u.name === name);
-        console.log(3)
         if (user) {
             // Nếu tên người dùng đã tồn tại, đăng nhập thành công
             yield put(loginSuccess(user));
-            console.log(4)
         } else {
             // Nếu không, thêm người dùng mới
             const newUser = yield call(addUser, name);

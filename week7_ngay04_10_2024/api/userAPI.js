@@ -42,3 +42,9 @@ export const updateUserById = async (id, data) => {
     })
     return response.json()
 }
+
+//find user by name
+export const findUserById = async (id) => {
+    const response = await fetch(`${uri}/${id}`)
+    return response.json()
+}

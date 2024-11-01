@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { findUserByName, updateUserById } from '../../api/userAPI';
+import { findUserByName, updateUserById, findUserById } from '../../api/userAPI';
 import {
     FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FETCH_USER_FAILURE,
     UPDATE_USER_JOB_REQUEST, UPDATE_USER_JOB_SUCCESS, UPDATE_USER_JOB_FAILURE,
@@ -33,7 +33,7 @@ function* updateUserJobSaga(action) {
 function* deleteUserJobSaga(action) {
     try {
         const { userId, jobIndex } = action.payload;
-        const user = yield call(findUserByName, userId);
+        const user = yield call(findUserById, userId);
         user.job.splice(jobIndex, 1);  // Remove job at index
         yield call(updateUserById, userId, user);
         yield put({ type: DELETE_USER_JOB_SUCCESS });
