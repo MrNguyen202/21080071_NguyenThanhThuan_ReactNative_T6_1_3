@@ -10,7 +10,7 @@ import JobItem from "../components/JobComponent";
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserRequest, deleteUserJobRequest, navigateToAddNote } from '../redux/actions/dashboardActions';
+import { fetchUserRequest, deleteUserJobRequest, navigateToAddNote, navigateToUpDateNote } from '../redux/actions/dashboardActions';
 import { navigate } from "../navigation/navigationRef";
 
 const Dashboard = ({ navigation, route }) => {
@@ -37,10 +37,15 @@ const Dashboard = ({ navigation, route }) => {
         }
     };
 
-
+    //add job
     const clickAdd = () => {
         dispatch(navigateToAddNote(user));
     };
+
+    //update job
+    const upDate = (index) => {
+        dispatch(navigateToUpDateNote(user, index));
+    }
 
     return (
         <View style={styles.container}>
@@ -73,7 +78,7 @@ const Dashboard = ({ navigation, route }) => {
                     contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}
                     data={user ? user[0].job : []}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => <JobItem item={item} index={index} onDelete={deleteJob} />}
+                    renderItem={({ item, index }) => <JobItem item={item} index={index} onDelete={deleteJob} onUpDate={upDate}/>}
                 />
             </View>
 

@@ -9,13 +9,14 @@ import { updateUserById } from "../api/userAPI";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { useDispatch } from 'react-redux';
-import { addJobRequest } from '../redux/actions/dashboardActions';
+import { addJobRequest, updateUserJobRequest } from '../redux/actions/dashboardActions';
 
 const AddNote = ({ navigation, route }) => {
 
     const dispatch = useDispatch();
     const [name, setName] = useState(route.params.data[0].name);
-    const [newJob, setNewJob] = useState('');
+    const [newJob, setNewJob] = useState(route.params.tv == "Update"?route.params.data[0].job[route.params.index] : '');
+    const [tacVu, setTacVu] = useState(route.params.tv);
 
     // Lấy dữ liệu từ ô input
     const onChangeJob = (text) => {
@@ -31,6 +32,17 @@ const AddNote = ({ navigation, route }) => {
         dispatch(addJobRequest(route.params.data[0].id, newJob));
         navigation.navigate('Dashboard', { name });
     };
+
+    //Update job
+    const upDateJob = () => {
+        if (newJob.trim() === '') {
+            alert('Please enter a job'); // Kiểm tra nếu ô input rỗng
+            return;
+        }
+        dispatch(updateUserJobRequest(route.params.data[0].id, newJob, route.params.index));
+        navigation.goBack();
+    }
+
 
     const clickBack = () => {
         navigation.goBack();
@@ -57,7 +69,7 @@ const AddNote = ({ navigation, route }) => {
             </View>
 
             <View style={styles.boxTitle}>
-                <Text style={styles.textTitle}>add your job</Text>
+                <Text style={styles.textTitle}>{tacVu} your job</Text>
             </View>
 
             <View style={styles.boxInputJob}>
@@ -65,6 +77,7 @@ const AddNote = ({ navigation, route }) => {
                     <MaterialCommunityIcons name="note-text-outline" size={24} color="#1DD75B" />
                     <TextInput
                         style={styles.textInput}
+                        value={newJob}
                         placeholder="input your job"
                         onChangeText={(text) => onChangeJob(text)}
                     ></TextInput>
@@ -74,7 +87,7 @@ const AddNote = ({ navigation, route }) => {
             <View style={styles.boxNutFinish}>
                 <TouchableOpacity
                     style={styles.nutFinish}
-                    onPress={addJob}
+                    onPress={tacVu == "Add" ? addJob : upDateJob}
                 >
                     <Text style={styles.textNutFinish}>Finish</Text>
                     <AntDesign name="arrowright" marginLeft={5} size={20} color="white" />

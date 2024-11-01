@@ -5,11 +5,16 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const JobItem = ({ item, index, onDelete }) => {
+const JobItem = ({ item, index, onDelete, onUpDate }) => {
 
     //trả về index của item được click
     const clickDelete = () => {
         onDelete(index);
+    }
+
+    //trả về index của item được click
+    const clickUpDate = () => {
+        onUpDate(index);
     }
 
     return (
@@ -26,7 +31,7 @@ const JobItem = ({ item, index, onDelete }) => {
             </View>
 
             <View style={styles.crud}>
-                <TouchableOpacity style={{ borderBottomWidth: 1, borderBlockColor: "#E3B30C" }}>
+                <TouchableOpacity onPress={clickUpDate} style={{ borderBottomWidth: 1, borderBlockColor: "#E3B30C" }}>
                     <MaterialCommunityIcons name="pencil-outline" size={24} color="#E3B30C" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={clickDelete}>

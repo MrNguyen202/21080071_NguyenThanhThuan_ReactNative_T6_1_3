@@ -15,8 +15,7 @@ export const ADD_JOB_SUCCESS = 'ADD_JOB_SUCCESS';
 export const ADD_JOB_FAILURE = 'ADD_JOB_FAILURE';
 
 export const ADD_NOTE = 'ADD_NOTE';
-
-
+export const UPDATE_NOTE = 'UPDATE_NOTE';
 
 // Action Creators
 export const fetchUserRequest = (name) => ({
@@ -24,9 +23,9 @@ export const fetchUserRequest = (name) => ({
     payload: name,
 });
 
-export const updateUserJobRequest = (user) => ({
+export const updateUserJobRequest = (userId, newJob, jobIndex) => ({
     type: UPDATE_USER_JOB_REQUEST,
-    payload: user,
+    payload: {userId, newJob, jobIndex},
 });
 
 export const deleteUserJobRequest = (userId, jobIndex) => ({
@@ -53,4 +52,9 @@ export const addJobFailure = (error) => ({
 export const navigateToAddNote = (data) => ({
     type: ADD_NOTE,
     payload: data,
+});
+
+export const navigateToUpDateNote = (data, jobIndex) => ({
+    type: UPDATE_NOTE,
+    payload: {data, jobIndex},
 });
